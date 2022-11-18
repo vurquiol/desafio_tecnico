@@ -52,15 +52,15 @@ const saveTipoCuenta = async(req,res) => {
 function getTipoCuenta(req,res) {
 	var tipoCuentaId = req.params.id;
 
-	TipoCuenta.findById(tipoCuentaId, (err, artist) => {
+	TipoCuenta.findById(tipoCuentaId, (err, tipocuenta) => {
 		if(err){
 			res.status(500).send({message: 'Error al buscar el tipo de cuenta'});
 		}else{
-			if(!artist){
+			if(!tipocuenta){
 				res.status(404).send({message: 'No existe el tipo de cuenta'});
 			
 			}else{
-				res.status(200).send({artist});
+				res.status(200).send({tipocuenta});
 			}
 		}
 	});

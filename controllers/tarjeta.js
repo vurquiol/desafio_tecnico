@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcrypt');
 var Tarjeta = require('../models/tarjeta');
+var TipoCuenta = require('../models/tipo_cuenta');
 var jwt = require('../services/jwt');
 
 
@@ -55,6 +56,23 @@ const saveTarjeta = async(req,res) => {
 		
 }
 
+
+function getTarjeta(req,res) {
+	  var tarjetaId =req.params.id; 	
+    Tarjeta.findById(tarjetaId).populate({path:'tipo_cuenta', select: 'tipo_cuenta'}).populate({path:'usuario', select: 'nombre'}).exec((err,tarjeta)=>{
+        if (err) {
+	        res.status(500).send({message:'Error en la peticion'});           
+        } else {
+            if (!tarjeta) {
+	            res.status(404).send({message:'La tarjeta no existe'});               
+            } else {
+	            res.status(200).send({tarjeta});                
+            }
+        }
+    });  
+}
+
 module.exports = {
-	saveTarjeta
+	saveTarjeta,
+	getTarjeta
 }

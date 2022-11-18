@@ -14,9 +14,16 @@ var tarjeta = require('./routes/tarjeta');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-//Configurar cabeceras http
+//Cabeceras http
+app.use((req,res,next) => {
+	res.header('Access-Cntrol-Allow-Origin','*');
+	res.header('Access-Cntrol-Allow-Headers','Authorization, X-API-KEY, Origin, X-Rquested-With, Content-Type, Accept, Access-Control-Allow-Request-Methord');
+	res.header('Access-Cntrol-Allow-Methods','GET, POST, OPTIONS, PUT, DELETE');
+	res.header('Allow','GET, POST, OPTIONS, PUT, DELETE');
+	next();
+});
 
-//Ruta base
+
 app.use('/api', usuario_routes);
 app.use('/api', usuario_destino_routes);
 app.use('/api', ttransferencia_routes); 
