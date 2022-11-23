@@ -75,7 +75,7 @@ const loginUser = async (request, response, next) => {
 	var rut = params.rut;
 	var clave = params.clave;
    
-    const user = await Usuario.findOne({ rut: });
+    const user = await Usuario.findOne({ rut});
     console.log(user+'user');
     if (user) {
     
