@@ -80,7 +80,7 @@ function loginUser(req, res){
 	
 	Usuario.findOne({rut}, (err, usuario) => {
 		if(err){
-			res.status(500).send({message: 'Error en la petición'});
+			res.status(500).send({message: 'Error en la petición'+ err});
 		}else{
 			if(!usuario){
 				res.status(404).send({message: 'El usuario no existe'});
