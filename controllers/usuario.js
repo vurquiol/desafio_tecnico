@@ -69,7 +69,7 @@ const saveUser = async(req,res) => {
 
 
 
-function loginUser(req, res){
+const loginUser = async(req, res){
 	// BODY PARSE LO CONVIERTE A OBJETO JSON
 	var params = req.body;
 
@@ -78,7 +78,7 @@ function loginUser(req, res){
 	var clave = params.clave;
 
 	
-	Usuario.findOne({rut}, (err, usuario) => {
+	const existeRut = await Usuario.findOne({rut}, (err, usuario) => {
 		if(err){
 			res.status(500).send({message: 'Error en la petición'+ err});
 		}else{
