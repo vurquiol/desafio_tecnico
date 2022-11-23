@@ -18,7 +18,7 @@ const { dbConnection } = require('./database/config');
 dbConnection();
 
 
-app.listen( process.env.PORT, () => {
+app.listen(process.env.PORT || 3005, () => {
     console.log('Servidor corriendo en puerto ' + process.env.PORT );
 });
 

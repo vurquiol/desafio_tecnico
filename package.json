@@ -4,7 +4,8 @@
   "description": "Proyecto Servicio de trasferencia",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node --exec babel-node index.js",
+    "start:dev": "nodemon index.js",   
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Victor Urquiola",
@@ -19,9 +20,10 @@
     "jwt-simple": "^0.5.6",
     "moment": "^2.29.4",
     "mongoose": "^6.7.2",
-    "mongoose-pagination": "^1.0.0"
+    "mongoose-pagination": "^1.0.0",
+     "nodemon": "^2.0.20"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
+  "engines":{
+    "node":"19.x"
   }
 }
