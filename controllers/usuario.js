@@ -67,49 +67,42 @@ const saveUser = async(req,res) => {
 	}
 }
 
+const loginUser = async (request, response, next) => {
+ 
+ 	var params = request.body;
 
 
-function loginUser(req, res){
-	// BODY PARSE LO CONVIERTE A OBJETO JSON
-	var params = req.body;
 	var rut = params.rut;
 	var clave = params.clave;
-	
-	setTimeout(() => { 
-	  Usuario.findOne({rut}, (err, usuario) => {
-		if(err){
-			res.status(500).send({message: 'Error en la petición'});
-		}else{
-			if(!usuario){
-				res.status(404).send({message: 'El usuario no existe'});
-			}else{
-
-				//Comprobar la contraseña
-				bcrypt.compare(clave, usuario.clave ,function(err, check){
+   
+    const user = await Usuario.findOne({ rut });
+    
+    if (user) {
+    	console.log(user.clave);
+      //Comprobar la contraseña
+				bcrypt.compare(clave, user.clave ,function(err, check){
 					if(check){
 						//veolver los datos del usuario logeado
 						if(params.gethash){
 							//devolver un token de jwt
-							res.status(200).send({
-								token: jwt.createToken(usuario)
+							response.status(200).send({
+								token: jwt.createToken(user)
 							});
 						}else{
-							res.status(200).send({usuario});
+							response.status(200).send({user});
 						}
 					}else{
-						res.status(404).send({message: 'El usuario no ha podido loguearse'});
+						response.status(404).send({message: 'El usuario no ha podido loguearse'});
 					}
 
 				});
-			}
+    } else {
+      response.status(404).send({message: 'El usuario no ha podido loguearse'});
+    }
+  
+};
 
-		}
-	});		 
-	}, 5000); 
-	
-	
 
-}
 
 function updateUser(req, res){
 	var usuarioId = req.params.id;
