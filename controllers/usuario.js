@@ -69,18 +69,16 @@ const saveUser = async(req,res) => {
 
 
 
-const loginUser = async(req, res){
+function loginUser(req, res){
 	// BODY PARSE LO CONVIERTE A OBJETO JSON
 	var params = req.body;
-
-
 	var rut = params.rut;
 	var clave = params.clave;
-
 	
-	const existeRut = await Usuario.findOne({rut}, (err, usuario) => {
+	setTimeout(() => { 
+	  Usuario.findOne({rut}, (err, usuario) => {
 		if(err){
-			res.status(500).send({message: 'Error en la petición'+ err});
+			res.status(500).send({message: 'Error en la petición'});
 		}else{
 			if(!usuario){
 				res.status(404).send({message: 'El usuario no existe'});
@@ -106,7 +104,10 @@ const loginUser = async(req, res){
 			}
 
 		}
-	});		
+	});		 
+	}, 5000); 
+	
+	
 
 }
 
