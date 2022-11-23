@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+require('dotenv').config();
 
-
-   const dbConnection = async() => {
+const dbConnection = async() => {
     
+    try{
+        await mongoose.connect(process.env.DB_CNN);
+        console.log('MongoDB Conected...');
+    }catch (error){
+        console.log(error);
+    }
     
-    const uri = process.env.DB_CNN;
-     await mongoose.connect(process.env.DB_CNN);
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-   
 
 }
 
 
-module.exports = {
-    dbConnection
-}
+module.exports = {dbConnection};
