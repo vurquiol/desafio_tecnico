@@ -78,9 +78,10 @@ const loginUser = async (request, response, next) => {
     const user = await Usuario.findOne({ rut });
     
     if (user) {
-    	console.log(user.clave);
+    
       //Comprobar la contraseña
 				bcrypt.compare(clave, user.clave ,function(err, check){
+					response.status(404).send({message:check});
 					if(check){
 						//veolver los datos del usuario logeado
 						if(params.gethash){
