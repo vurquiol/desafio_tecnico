@@ -16,7 +16,6 @@ var tarjeta = require('./routes/tarjeta');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-app.use(cors());
 
 app.use('/api', usuario_routes);
 app.use('/api', usuario_destino_routes);
