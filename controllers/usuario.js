@@ -71,16 +71,17 @@ const loginUser = async (request, response, next) => {
  
  	var params = request.body;
 
-
+	console.log(params+'params');
 	var rut = params.rut;
 	var clave = params.clave;
    
-    const user = await Usuario.findOne({ rut });
-    
+    const user = await Usuario.findOne({ rut: });
+    console.log(user+'user');
     if (user) {
     
       //Comprobar la contraseña
-			const check = bcrypt.compare(clave, user.clave)
+			const check = await bcrypt.compare(clave, user.clave);
+			console.log(check+'CHECK');
 					if(check){
 						//veolver los datos del usuario logeado
 						if(params.gethash){
