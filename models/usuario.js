@@ -12,7 +12,11 @@ var UsuarioSchema = Schema({
 		type: String,
 		require:true		
 	},
-
+	rut: {
+		type: String,
+		require:true,
+		unique: true	
+	},
 	email: {
 		type: String,
 		require:true,
@@ -20,13 +24,16 @@ var UsuarioSchema = Schema({
 	},
 	clave: {
 		type: String,
-		require:true,
-		unique: true
+		require:true
+	
 	},
 	rol: {
 		type: String,
 		require:true,
 		default:'USER_ROLE'
+	},
+	saldo:{
+		type: Number
 	}
 	
 	

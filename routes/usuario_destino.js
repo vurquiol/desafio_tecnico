@@ -10,5 +10,5 @@ var md_auth = require('../middlewares/authenticated');
 api.post('/registrar-destinatario', UsuarioDestinoController.saveRecipient);
 api.put('/actualizar-destinatario/:id',  md_auth.ensureAuth, UsuarioDestinoController.updateRecipient);
 api.delete('/eliminar-destinatario/:id',md_auth.ensureAuth,UsuarioDestinoController.deleteRecipient); 
-
+api.post('/destinatario/:id', UsuarioDestinoController.getUsuarioDestino); 
 module.exports = api;

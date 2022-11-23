@@ -12,7 +12,7 @@ const { dbConnection } = require('./database/config');
 
 
 // Configurar CORS
-app.use( cors() );
+
 
 // Base de datos
 dbConnection();

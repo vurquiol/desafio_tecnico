@@ -16,13 +16,12 @@ const saveTipoCuenta = async(req,res) => {
 	tipoCuenta.tipo_cuenta = params.tipo_cuenta;
 	
 	const existeTipoCuenta = await TipoCuenta.findOne({tipo_cuenta:  tipoCuenta.tipo_cuenta});
-	console.log(existeTipoCuenta);
+	
 	if(existeTipoCuenta){
 		res.status(400).send({message: 'El tipo de cuenta ya esta registrado'} );
 	}else{
 		
-		// Encriptar contraseña y guardar datos	
-		console.log(tipoCuenta.tipo_cuenta);	
+		// Encriptar contraseña y guardar datos			
 				if(tipoCuenta.tipo_cuenta != null){
 						// Guardar el usuario
 						
@@ -66,8 +65,27 @@ function getTipoCuenta(req,res) {
 	});
 }
 
+function getCuentas(req,res) {
+
+    console.log('tipocuenta')
+	TipoCuenta.find((err, tipocuenta) => {
+		if(err){
+			res.status(500).send({message: 'Error al buscar el tipo de cuenta'});
+		}else{
+			if(!tipocuenta){
+				res.status(404).send({message: 'No existe el tipo de cuenta'});
+			
+			}else{
+				console.log(tipocuenta)
+				res.status(200).send({tipocuenta});
+			}
+		}
+	});
+}
+
 
 module.exports = {
 	saveTipoCuenta,
-	getTipoCuenta
+	getTipoCuenta,
+	getCuentas
 }

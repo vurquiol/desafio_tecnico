@@ -9,6 +9,7 @@ exports.createToken = function(usuario){
 	var payload = {
 		sub: usuario._id,
 		nombre: usuario.nombre,
+		rut: usuario.rut, 
 		apellido: usuario.apellido,
 		email: usuario.email,
 		role: usuario.role,

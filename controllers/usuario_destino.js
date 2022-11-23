@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcrypt');
 var UsuarioDestino = require('../models/usuario_destino');
+var Usuario = require('../models/usuario');
 var jwt = require('../services/jwt');
 
 
@@ -13,12 +14,10 @@ const saveRecipient = async(req,res) => {
 	var usuarioDestino = new UsuarioDestino();
 
 	var params = req.body;
-	const {email, clave, nombre} = req.body;
 
-	
-	
 	usuarioDestino.nombre = params.nombre;
 	usuarioDestino.rut = params.rut;
+	usuarioDestino.correo = params.correo;	
 	usuarioDestino.telefono = params.telefono;
 	usuarioDestino.banco_destino = params.banco_destino;
 	usuarioDestino.tipo_cuenta = params.tipo_cuenta;
@@ -35,6 +34,7 @@ const saveRecipient = async(req,res) => {
 		// Encriptar contraseña y guardar datos		
 				if(usuarioDestino.nombre != null 
 					&& usuarioDestino.rut != null 
+					&& usuarioDestino.correo != null 
 					&& usuarioDestino.telefono != null
 					&& usuarioDestino.banco_destino != null
 					&& usuarioDestino.tipo_cuenta != null
@@ -42,7 +42,7 @@ const saveRecipient = async(req,res) => {
 						// Guardar el usuario
 						
 							usuarioDestino.save((err, usuarioDestinoStored) =>{
-							if(err){
+							if(err){								
 								res.status(500).send({message: 'Error al guardar el destinatario'});
 							}else{
 								if(!usuarioDestinoStored){
@@ -102,8 +102,44 @@ function deleteRecipient(req,res) {
     });
 }
 
+function getUsuarioDestino(req,res) {
+
+	var usuarioId= req.params.id;
+	var params = req.body;
+	
+		Usuario.findOne({_id:usuarioId}, (err, usuario) => {
+		if(err){
+			res.status(500).send({message: 'Error en la petición'});
+		}else{
+			if(!usuario){
+				res.status(404).send({message: 'El usuario no existe'});
+			}else{	
+				UsuarioDestino.find({rut_origen:usuario.rut},(err, usuarioDestinoStored) => {
+					if(err){
+						res.status(500).send({message: 'Error al buscar el usuario destino'});
+					}else{
+						if(!usuarioDestinoStored){
+							res.status(404).send({message: 'No existe el usuario destino'});
+						
+						}else{
+							res.status(200).send({usuario_destino:usuarioDestinoStored});
+						}
+					}
+				});			
+			}
+
+		}
+		});		
+				
+			
+													
+
+	
+}
+
 module.exports = {
 	saveRecipient,
 	updateRecipient,
-	deleteRecipient
+	deleteRecipient,
+	getUsuarioDestino
 }

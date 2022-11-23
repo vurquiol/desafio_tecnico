@@ -27,7 +27,7 @@ const saveTarjeta = async(req,res) => {
 	}else{
 		
 		// Encriptar contraseña y guardar datos	
-		console.log(tarjeta);	
+		
 				if(tarjeta.numero_cuenta != null 
 					&&  tarjeta.usuario != null 
 					&&  tarjeta.tipo_cuenta != null 
