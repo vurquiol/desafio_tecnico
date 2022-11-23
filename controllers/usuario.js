@@ -80,8 +80,7 @@ const loginUser = async (request, response, next) => {
     if (user) {
     
       //Comprobar la contraseña
-				bcrypt.compare(clave, user.clave ,function(err, check){
-					response.status(404).send({message:check});
+			const check = bcrypt.compare(clave, user.clave)
 					if(check){
 						//veolver los datos del usuario logeado
 						if(params.gethash){
@@ -95,8 +94,7 @@ const loginUser = async (request, response, next) => {
 					}else{
 						response.status(404).send({message: 'El usuario no ha podido loguearse'});
 					}
-
-				});
+				
     } else {
       response.status(404).send({message: 'El usuario no ha podido loguearse'});
     }
