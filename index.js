@@ -12,6 +12,7 @@ const { dbConnection } = require('./database/config');
 
 
 // Configurar CORS
+app.use(cors({ origin: true }));
 
 // Base de datos
 dbConnection();
